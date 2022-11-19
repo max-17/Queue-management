@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from '../../../api/axios';
 
+const SERVICES_URL = 'businesses/instance/services';
+
 const ServiceList = () => {
     const [listOfServices, setListOfServices] = useState([]);
     const { businessId } = useParams();
@@ -9,7 +11,7 @@ const ServiceList = () => {
     const fetchData = async () => {
         // You can await here
         try {
-            const response = await axios.get(`businesses/${businessId}/services`);
+            const response = await axios.get(SERVICES_URL);
 
             setListOfServices(() => [...response.data]);
         } catch (error) {

@@ -1,6 +1,7 @@
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 import React, { Component } from 'react';
 
-const Input = React.forwardRef(({ name, label, value, onChange, type, placeholder }, ref) => {
+const Input = React.forwardRef(({ name, label, value, onChange, type, placeholder, isDisabled }, ref) => {
     return (
         <div className='form-outline mb-4'>
             <label className='form-label'>{label}</label>
@@ -14,6 +15,7 @@ const Input = React.forwardRef(({ name, label, value, onChange, type, placeholde
                 id={name}
                 ref={ref}
                 placeholder={placeholder}
+                disabled={isDisabled}
             />
         </div>
     );

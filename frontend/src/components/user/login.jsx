@@ -66,7 +66,7 @@ const Login = () => {
                             type='email'
                             id='email'
                             ref={userRef}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value.toLowerCase())}
                             value={email}
                             required
                         />
@@ -87,7 +87,6 @@ const Login = () => {
                         Need an Account?
                         <br />
                         <span className='line'>
-                            {/*put router link here*/}
                             <Link to='/signup'>Sign Up</Link>
                         </span>
                     </p>

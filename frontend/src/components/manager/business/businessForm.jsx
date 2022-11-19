@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
+import Input from '../../common/input';
 
 const BusinessForm = ({ formTitle, data, handleSubmit, businessLocation, getCoordinates }) => {
     const businessRef = useRef(null);
@@ -25,56 +26,58 @@ const BusinessForm = ({ formTitle, data, handleSubmit, businessLocation, getCoor
                     e.preventDefault();
                 }}
             >
-                <h4>{formTitle}</h4>
-                <label htmlFor='businessName'>Business name: </label>
-                <input className='form-control' type='text' id='businessName' ref={businessRef} required />
-
-                <label htmlFor='city'>City: </label>
-                <input className='form-control' type='text' autoComplete='f-u-chrome' ref={cityRef} required />
-
-                <label htmlFor='adrress'>Address: </label>
-                <Autocomplete onPlaceChanged={() => getCoordinates(addressRef)}>
-                    <input className='form-control' type='text' autoComplete='f-u-chrome' ref={addressRef} />
-                </Autocomplete>
-                <label htmlFor='email'>Account Email:</label>
-                <input className='form-control' type='email' id='email' ref={emailRef} required />
-
-                <label htmlFor='password1'>Password:</label>
-                <input
-                    className='form-control'
-                    type='password'
-                    id='password1'
-                    onChange={(e) => setPassword1(e.target.value)}
-                    value={password1}
-                    required
+                <h4>Edit Business Account</h4>
+                <Input
+                    name='business-name'
+                    // ref={businessRef}
+                    label='Business Name:'
                 />
-                <label htmlFor='password2'>Password:</label>
-                <input
-                    className='form-control'
+                <Input
+                    name='city'
+                    // ref={cityRef}
+                    label='City:'
+                />
+                <Autocomplete
+                // onPlaceChanged={() => getCoordinates(addressRef)}
+                >
+                    <Input
+                        name='address'
+                        // ref={addressRef} label='Address:'
+                    />
+                </Autocomplete>
+                <Input
+                    name='email'
+                    // ref={emailRef}
+                    label='Email:'
+                    type='email'
+                />
+                <Input
+                    name='password1'
+                    label='Password:'
                     type='password'
-                    id='password2'
-                    onChange={(e) => setPassword2(e.target.value)}
-                    value={password2}
-                    required
+                    // value={password1}
+                    // onChange={(e) => {
+                    //     setPassword1(e.target.value);
+                    // }}
+                />
+                <Input
+                    name='password2'
+                    label='Confirm Password:'
+                    type='password'
+                    // value={password2}
+                    // onChange={(e) => {
+                    //     setPassword2(e.target.value);
+                    // }}
                 />
             </form>
+
             <button
-                className='btn btn-primary mt-3 px-4'
+                className='btn btn-primary mt-3 px-4 ms-2'
                 type='button'
-                onClick={(e) => {
-                    e.preventDefault();
-
-                    const data = {
-                        name: businessRef.current.value,
-                        lng: businessLocation ? businessLocation.lng : null,
-                        lat: businessLocation ? businessLocation.lat : null,
-                        address: addressRef.current.value,
-                        city: cityRef.current.value,
-                    };
-                    console.log(businessLocation.lat);
-
-                    handleSubmit(data);
-                }}
+                // onClick={(e) => {
+                //     e.preventDefault();
+                //     handleSubmit();
+                // }}
             >
                 save
             </button>
@@ -84,7 +87,15 @@ const BusinessForm = ({ formTitle, data, handleSubmit, businessLocation, getCoor
 
 BusinessForm.defaultProps = {
     formTitle: 'Create Business',
-    data: { name: '', address: '', city: '', lat: null, lng: null },
+    data: {
+        email: '',
+        password: '',
+        name: '',
+        address: '',
+        city: '',
+        lat: null,
+        lng: null,
+    },
 };
 
 export default BusinessForm;

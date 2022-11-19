@@ -51,7 +51,7 @@ const Services = () => {
                 <ul className='list-group'>
                     {/* loop */}
                     {services.map(({ name, id, business }, index) => (
-                        <Link to={`${id}`} className='list-group-item' id={id} key={index}>
+                        <Link to={`services/${id}`} className='list-group-item' id={id} key={index}>
                             <h5 className='mb-1'>{name}</h5>
 
                             <p className='mb-1'>{business.name}</p>

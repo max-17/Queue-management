@@ -9,7 +9,7 @@ const ServiceList = () => {
     const fetchData = async () => {
         // You can await here
         try {
-            const response = await axios.get(`/businesses${businessId}`);
+            const response = await axios.get(`/services`);
 
             setListOfServices(() => [...response.data]);
         } catch (error) {
@@ -26,11 +26,11 @@ const ServiceList = () => {
             <div className='col-3 m-2'>
                 <ul className='list-group'>
                     {/* loop */}
-                    {listOfServices.map((business) => (
-                        <Link to={`${business.id}`} className='list-group-item' id={business.id} key={business.id}>
-                            <h5 className='mb-1'>{business.name}</h5>
+                    {listOfServices.map((servcie) => (
+                        <Link to={`${servcie.id}`} className='list-group-item' id={servcie.id} key={servcie.id}>
+                            <h5 className='mb-1'>{servcie.name}</h5>
 
-                            <p className='mb-1'>{business.address}</p>
+                            <p className='mb-1'>{servcie.business_address}</p>
                         </Link>
                     ))}
                     <li className='list-group-item d-flex justify-content-between align-items-center p-0'>

@@ -1,14 +1,16 @@
-import { React, useContext } from 'react';
+import { React, useContext, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useLoadScript } from '@react-google-maps/api';
-
 import AuthContext from './context/AuthProvider';
 import './App.css';
 import Home from './components/home';
 import Login from './components/user/login';
-import Profile from './components/user/profile';
+import BusinessAccount from './components/user/businessAccount';
 import Signup from './components/user/signup';
 import Manager from './components/manager/business/manager';
+
+import jwt_decode from 'jwt-decode';
+import ServiceList from './components/customer/service/serviceList';
 
 const libraries = ['places'];
 
@@ -21,7 +23,20 @@ function App() {
     const navigate = useNavigate();
 
     const { auth, setAuth } = useContext(AuthContext);
-    console.log(auth);
+
+    useEffect(() => {
+        // check if token is expired
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            try {
+                const decodedToken = jwt_decode(accessToken);
+
+                decodedToken.exp * 1000 < Date.now() && localStorage.removeItem('accessToken');
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }, []);
 
     if (!isLoaded) {
         return <h1>Loading ...</h1>;
@@ -123,11 +138,11 @@ function App() {
             </nav>
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/profile' element={<Profile />} />
-                <Route path='/signup' element={<Signup />} />
-                <Route path='/business/*' element={<Manager />} />
-                {/* <Route path='services/' element={<CreateBusiness />} /> */}
+                <Route path='login' element={<Login />} />
+                <Route path='business_account' element={<BusinessAccount />} />
+                <Route path='signup' element={<Signup />} />
+                <Route path='business/*' element={<Manager />} />
+                <Route path='services' element={<ServiceList />} />
 
                 <Route
                     path='*'

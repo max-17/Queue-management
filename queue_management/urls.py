@@ -23,13 +23,14 @@ from rest_framework_nested import routers
 from core.views import *
 
 
-
 router = routers.SimpleRouter()
 # router.register('customers', CustomerViewSet.as_view(), basename='customer')
 router.register('businesses', BusinessViewSet,)
 
-business_router = routers.NestedSimpleRouter(router, r'businesses', lookup='business')
-business_router.register(r'services', ServiceViewSet, basename='business-services')
+business_router = routers.NestedSimpleRouter(
+    router, r'businesses', lookup='business')
+business_router.register(r'services', ServiceViewSet,
+                         basename='business-services')
 
 router.register('services', ServiceListView)
 router.register('workers', WorkerViewSet)
@@ -48,8 +49,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('customer', CustomerViewSet.as_view()),
     # path('customer', CustomerDetailView.as_view()),
-   
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + router.urls + business_router.urls
-
-
-
